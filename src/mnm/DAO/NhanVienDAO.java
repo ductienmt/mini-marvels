@@ -32,29 +32,33 @@ public class NhanVienDAO {
         int result = -1;
         String sql = "INSERT INTO NhanVien(MaNV, HoTen, GioiTinh, Email, NgaySinh, MatKhau, VaiTro, GhiChu, Hinh, MaCH) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            conn = DatabaseHelper.getDBConnect();
-            sttm = conn.prepareStatement(sql);
-            sttm.setString(1, nhanVien.getMaNV());
-            sttm.setString(2, nhanVien.getHoTen());
-            sttm.setString(3, nhanVien.getGioiTinh());
-            sttm.setString(4, nhanVien.getEmail());
-            sttm.setDate(5, nhanVien.getNgaySinh());
-            sttm.setString(6, nhanVien.getMatKhau());
-            sttm.setString(7, nhanVien.getVaiTro());
-            sttm.setString(8, nhanVien.getGhiChu());
-            sttm.setString(9, nhanVien.getHinh());
-            sttm.setString(10, nhanVien.getMaCH());
+       if(nhanVien == null) {
+    	   result = -1;
+       } else {
+           try {
+               conn = DatabaseHelper.getDBConnect();
+               sttm = conn.prepareStatement(sql);
+               sttm.setString(1, nhanVien.getMaNV());
+               sttm.setString(2, nhanVien.getHoTen());
+               sttm.setString(3, nhanVien.getGioiTinh());
+               sttm.setString(4, nhanVien.getEmail());
+               sttm.setDate(5, nhanVien.getNgaySinh());
+               sttm.setString(6, nhanVien.getMatKhau());
+               sttm.setString(7, nhanVien.getVaiTro());
+               sttm.setString(8, nhanVien.getGhiChu());
+               sttm.setString(9, nhanVien.getHinh());
+               sttm.setString(10, nhanVien.getMaCH());
 
-            if (sttm.executeUpdate() > 0) {
-                System.out.println("Insert thành công");
-                result = 1;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.toString());
-        } finally {
-            closeResources();
-        }
+               if (sttm.executeUpdate() > 0) {
+                   System.out.println("Insert thành công");
+                   result = 1;
+               }
+           } catch (SQLException e) {
+               System.out.println("Error: " + e.toString());
+           } finally {
+               closeResources();
+           }
+       }
         return result;
     }
     

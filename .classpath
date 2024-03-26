@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="activation-jaf1.1.1.jar"/>
+	<classpathentry kind="lib" path="commons-io-2.15.0.jar"/>
+	<classpathentry kind="lib" path="flatlaf-3.1.1.jar"/>
+	<classpathentry kind="lib" path="javax.mail.jar"/>
+	<classpathentry kind="lib" path="javax.mail-api-1.6.2.jar"/>
+	<classpathentry kind="lib" path="miglayout-4.0.jar"/>
+	<classpathentry kind="lib" path="mssql-jdbc-12.2.0.jre11.jar"/>
+	<classpathentry kind="lib" path="mssql-jdbc-12.2.0.jre8.jar"/>
+	<classpathentry kind="lib" path="TimingFramework-0.55.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

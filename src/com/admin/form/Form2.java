@@ -146,6 +146,11 @@ public class Form2 extends javax.swing.JPanel {
         txtNguongoc.setText(model.getNguonGoc());
         txtNpp.setText(model.getNsx());
         txtSoluong.setText(String.valueOf(model.getSoLuongTon()));
+        Integer trangThai = 0;
+        if(model.getTrangThai()){
+            trangThai = 1;
+        }
+        txtTrangThai.setText(String.valueOf(trangThai));
     }
 
     private void addSanPham() {
@@ -161,10 +166,14 @@ public class Form2 extends javax.swing.JPanel {
             int soLuongTon = Integer.parseInt(txtSoluong.getText());
             String dateString = txtNgaysanxuat.getText(); // Lấy ngày từ TextField
             Date ngaySx = DateHelper.convertStringToDate(dateString);
+            Boolean trangThai = true;
+            if (txtTrangThai.getText().trim().equals("0")) {
+                trangThai = false;
+            }
 
             // Tạo một đối tượng SanPham
             // String maSP, String tenSP, String maLoai, String nsx, String nguonGoc, String moTa, float donGia, int soLuongTon, Date ngaySx, String hinh
-            SanPham sanPham = new SanPham(maSP, tenSP, maLoai, nsx, nguonGoc, moTa, donGia, soLuongTon, ngaySx, hinh);
+            SanPham sanPham = new SanPham(maSP, tenSP, maLoai, nsx, nguonGoc, moTa, donGia, soLuongTon, ngaySx, hinh, trangThai);
 
             // Thực hiện thêm sản phẩm bằng cách gọi phương thức insertSanPham từ DAO
             int resultSP = spDAO.insertSanPham(sanPham);
@@ -192,6 +201,10 @@ public class Form2 extends javax.swing.JPanel {
             int soLuongTon = Integer.parseInt(txtSoluong.getText());
             String dateString = txtNgaysanxuat.getText(); // Lấy ngày từ TextField
             Date ngaySx = DateHelper.convertStringToDate(dateString);
+            Boolean trangThai = true;
+            if (txtTrangThai.getText().trim().equals("0")) {
+                trangThai = false;
+            }
             // Lấy các giá trị khác từ giao diện người dùng
 
             // Tạo đối tượng SanPham với thông tin mới
@@ -206,6 +219,7 @@ public class Form2 extends javax.swing.JPanel {
             sanPham.setSoLuongTon(soLuongTon);
             sanPham.setNgaySx(ngaySx);
             sanPham.setHinh(hinh);
+            sanPham.setTrangThai(trangThai);
 
             // Đặt các giá trị khác cho đối tượng SanPham
             // Gọi phương thức updateSanPham từ DAO để cập nhật thông tin sản phẩm
@@ -280,6 +294,15 @@ public class Form2 extends javax.swing.JPanel {
         String moTa = txtMota.getText();
         String soLuongText = txtSoluong.getText();
         String dateString = txtNgaysanxuat.getText();
+        String trangThai = txtTrangThai.getText().trim();
+        
+        if (trangThai.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập trang thái của sản phẩm 1 là hoạt động, 0 là dừng hoạt động", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        if (!trangThai.equals("0") || !trangThai.equals("1")){
+            JOptionPane.showMessageDialog(this, "Chỉ chấp nhận 1 và 0.\n 1 là hoạt động, 0 là dừng hoạt động", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
 
         // Kiểm tra tính hợp lệ của dữ liệu
         if (maSP.isEmpty()) {
@@ -372,6 +395,7 @@ public class Form2 extends javax.swing.JPanel {
         btnList = new com.login.swing.Button();
         jPanel1 = new javax.swing.JPanel();
         pic = new com.admin.swing.ImageSP();
+        txtTrangThai = new com.login.swing.TextField();
 
         setBackground(new java.awt.Color(249, 249, 249));
 
@@ -482,6 +506,9 @@ public class Form2 extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        txtTrangThai.setBackground(new java.awt.Color(249, 249, 249));
+        txtTrangThai.setLabelText("Trạng thái");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -503,20 +530,21 @@ public class Form2 extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNpp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtMaLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtMasp, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
                             .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNguongoc, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(txtGia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtNpp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtNguongoc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                    .addComponent(txtGia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtSoluong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtNgaysanxuat, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))))
+                                    .addComponent(txtNgaysanxuat, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                                    .addComponent(txtTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(18, 18, 18)
                         .addComponent(txtMota, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)))
                 .addGap(22, 22, 22))
@@ -543,7 +571,9 @@ public class Form2 extends javax.swing.JPanel {
                                 .addComponent(txtNgaysanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNguongoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
-                            .addComponent(txtNpp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtNpp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -608,5 +638,6 @@ public class Form2 extends javax.swing.JPanel {
     private com.login.swing.TextField txtNguongoc;
     private com.login.swing.TextField txtNpp;
     private com.login.swing.TextField txtSoluong;
+    private com.login.swing.TextField txtTrangThai;
     // End of variables declaration//GEN-END:variables
 }

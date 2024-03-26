@@ -15,12 +15,13 @@ public class SanPham {
     private float donGia;
     private int soLuongTon;
     private Date ngaySx;
+    private boolean trangThai;
     
 
     public SanPham() {
     }
 
-    public SanPham(String maSP, String tenSP, String maLoai, String nsx, String nguonGoc, String moTa, float donGia, int soLuongTon, Date ngaySx, String hinh) {
+    public SanPham(String maSP, String tenSP, String maLoai, String nsx, String nguonGoc, String moTa, float donGia, int soLuongTon, Date ngaySx, String hinh, Boolean trangThai) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.maLoai = maLoai;
@@ -31,6 +32,7 @@ public class SanPham {
         this.soLuongTon = soLuongTon;
         this.ngaySx = ngaySx;
         this.hinh = hinh;
+        this.trangThai = trangThai;
     }
     
     public String getHinh() {
@@ -112,7 +114,15 @@ public class SanPham {
     public void setNgaySx(Date ngaySx) {
         this.ngaySx = ngaySx;
     }
+    
+    
+    public Boolean getTrangThai() {
+        return trangThai;
+    }
 
+    public void setTrangThai(Boolean trangThai) {
+        this.trangThai = trangThai;
+    }
     
     
     

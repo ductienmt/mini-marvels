@@ -11,7 +11,7 @@ import java.sql.*;
  */
 public class DatabaseHelper {
     public static final String connectionUrl = "jdbc:sqlserver://localhost:1433;trustServerCertificate=true;"
-            + "databaseName=MiniMarvels;user=sa;password=1730310522";
+            + "databaseName=MiniMarvels;user=sa;password=123456789";
     public static Connection getDBConnect(){
         Connection conn = null;
         try {

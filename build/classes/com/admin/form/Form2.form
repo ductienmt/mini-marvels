@@ -39,22 +39,23 @@
                       <Component id="jPanel1" max="32767" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtNpp" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="txtMaLoai" pref="247" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="txtMasp" pref="243" max="32767" attributes="0"/>
                           </Group>
                           <Component id="txtName" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtNguongoc" pref="250" max="32767" attributes="0"/>
-                                  <Component id="txtGia" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="txtNpp" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtNguongoc" alignment="0" pref="250" max="32767" attributes="0"/>
+                                  <Component id="txtGia" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtSoluong" max="32767" attributes="0"/>
                                   <Component id="txtNgaysanxuat" pref="240" max="32767" attributes="0"/>
+                                  <Component id="txtTrangThai" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -91,7 +92,10 @@
                               <Component id="txtNguongoc" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtNpp" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtNpp" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTrangThai" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Component id="jPanel1" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -320,5 +324,13 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="com.login.swing.TextField" name="txtTrangThai">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f9" green="f9" red="f9" type="rgb"/>
+        </Property>
+        <Property name="labelText" type="java.lang.String" value="Tr&#x1ea1;ng th&#xe1;i"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

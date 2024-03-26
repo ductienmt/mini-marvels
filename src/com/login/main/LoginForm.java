@@ -295,7 +295,11 @@ public class LoginForm extends javax.swing.JFrame {
      */
     private void sendemail(String email) {
         random = generateRandomNumber();
-        sendOTP(senderEmail, senderPass, email, random);
+        new Thread(new Runnable() {
+            public void run() {
+                sendOTP(senderEmail, senderPass, email, random);
+            }
+        }).start();
         DialogHelper.alert(this, "OTP đã được gửi qua email của bạn");
         send = true;
     }

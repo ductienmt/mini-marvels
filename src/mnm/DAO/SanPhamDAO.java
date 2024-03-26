@@ -25,7 +25,7 @@ public class SanPhamDAO {
 
     public int getSoLuongSanPham() {
         int soLuong = 0;
-        String sql = "SELECT COUNT(*) AS SoLuong FROM SanPham";
+        String sql = "SELECT COUNT(*) AS SoLuong FROM SanPham WHERE TrangThai = 1";
 
         try {
             conn = DatabaseHelper.getDBConnect();
@@ -46,8 +46,8 @@ public class SanPhamDAO {
 
     public int insertSanPham(SanPham sanPham) {
         int result = -1;
-        String sql = "INSERT INTO SanPham(MaSP, TenSP, DonGia, MaLoai, NhaSanXuat, NguonGoc, MoTa, SoLuongTon, NgaySanXuat, Hinh) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SanPham(MaSP, TenSP, DonGia, MaLoai, NhaSanXuat, NguonGoc, MoTa, SoLuongTon, NgaySanXuat, Hinh, TrangThai) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             conn = DatabaseHelper.getDBConnect();
             sttm = conn.prepareStatement(sql);
@@ -61,6 +61,11 @@ public class SanPhamDAO {
             sttm.setInt(8, sanPham.getSoLuongTon());
             sttm.setDate(9, sanPham.getNgaySx());
             sttm.setString(10, sanPham.getHinh());
+            int trangThai = 0;
+            if (sanPham.getTrangThai() != null && sanPham.getTrangThai()) {
+                trangThai = 1;
+            }
+            sttm.setInt(11, trangThai);
 
             result = sttm.executeUpdate();
             if (result > 0) {
@@ -70,6 +75,7 @@ public class SanPhamDAO {
             }
         } catch (SQLException e) {
             System.out.println("Error inserting SanPham: " + e.toString());
+            result = -1;
         } finally {
             closeResources();
         }
@@ -78,7 +84,7 @@ public class SanPhamDAO {
 
     public int updateSanPham(SanPham sanPham) {
         int result = -1;
-        String sql = "UPDATE SanPham SET TenSP=?, DonGia=?, MaLoai=?, NhaSanXuat=?, NguonGoc=?, MoTa=?, SoLuongTon=?, NgaySanXuat=?, Hinh=? WHERE MaSP=?";
+        String sql = "UPDATE SanPham SET TenSP=?, DonGia=?, MaLoai=?, NhaSanXuat=?, NguonGoc=?, MoTa=?, SoLuongTon=?, NgaySanXuat=?, Hinh=?, TrangThai=? WHERE MaSP=?";
         try {
             conn = DatabaseHelper.getDBConnect();
             sttm = conn.prepareStatement(sql);
@@ -92,7 +98,12 @@ public class SanPhamDAO {
             sttm.setInt(7, sanPham.getSoLuongTon());
             sttm.setDate(8, sanPham.getNgaySx());
             sttm.setString(9, sanPham.getHinh());
-            sttm.setString(10, sanPham.getMaSP());
+            int trangThai = 0;
+            if (sanPham.getTrangThai() != null && sanPham.getTrangThai()) {
+                trangThai = 1;
+            }
+            sttm.setInt(10, trangThai);
+            sttm.setString(11, sanPham.getMaSP());
 
             result = sttm.executeUpdate();
             if (result > 0) {
@@ -127,6 +138,12 @@ public class SanPhamDAO {
                 sanPham.setSoLuongTon(rs.getInt("SoLuongTon"));
                 sanPham.setNgaySx(rs.getDate("NgaySanXuat"));
                 sanPham.setHinh(rs.getString("Hinh"));
+                Boolean trangthai = true;
+                Integer trangthaiInt = rs.getInt("TrangThai");
+                if (trangthaiInt == 0) {
+                    trangthai = false;
+                }
+                sanPham.setTrangThai(trangthai);
 
                 return sanPham;
             }
@@ -136,6 +153,29 @@ public class SanPhamDAO {
             closeResources();
         }
         return null;
+    }
+
+    public int hideSanPham(String maSP) {
+        int result = -1;
+        String sql = "UPDATE SanPham SET TrangThai = 0 WHERE MaSP=?";
+        try {
+            conn = DatabaseHelper.getDBConnect();
+            sttm = conn.prepareStatement(sql);
+
+            sttm.setString(1, maSP);
+
+            result = sttm.executeUpdate();
+            if (result > 0) {
+                System.out.println("Ẩn sản phẩm thành công");
+            } else {
+                System.out.println("Ẩn sản phẩm thất bại");
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi ẩn sản phẩm: " + e.toString());
+        } finally {
+            closeResources();
+        }
+        return result;
     }
 
     /**
