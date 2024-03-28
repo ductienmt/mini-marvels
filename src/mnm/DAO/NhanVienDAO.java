@@ -131,7 +131,7 @@ public class NhanVienDAO {
      * @return 
      */
     public int delete(String maNV) {
-        int result = 0;
+        int result = -1;
         String sql = "DELETE FROM NhanVien WHERE MaNV=?";
         try {
             conn = DatabaseHelper.getDBConnect();
